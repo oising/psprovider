@@ -1,7 +1,8 @@
-﻿param($outputDir) 
+﻿ipmo c:\projects\PowerShell\PSProvider\PSProviderFramework\bin\Debug\PSProviderFramework.dll
 
-ipmo c:\projects\PowerShell\PSProvider\PSProviderFramework\bin\Debug\PSProviderFramework.dll
-new-psdrive ps moduleboundprovider -root / -moduleinfo $(new-module -name test {
+if (Get-PSDrive ps -ea 0) { remove-psdrive ps  }
+
+new-psdrive ps containerscriptprovider -root / -moduleinfo $(new-module -name test {
 
 	$data = @{
 		a = "a" | select foo,bar
@@ -66,3 +67,5 @@ new-psdrive ps moduleboundprovider -root / -moduleinfo $(new-module -name test {
 		}
 	}
 })
+
+dir ps:\a

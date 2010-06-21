@@ -31,7 +31,7 @@ new-psdrive ps containerscriptprovider -root / -moduleinfo $(new-module -name te
 
 		if ($path) {
 
-			$psprovider.writewarning("item exists $path")
+			$psprovider.writeverbose("item exists $path")
 			$data.containskey($path)
 
 		} else {
@@ -65,6 +65,10 @@ new-psdrive ps containerscriptprovider -root / -moduleinfo $(new-module -name te
 				$psprovider.writeitemobject($data[$_], $_, $false)
 			}
 		}
+	}
+
+	function clearitem($path) {
+		$psprovider.writeverbose("clearitem '$path'")
 	}
 })
 

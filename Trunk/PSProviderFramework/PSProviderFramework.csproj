@@ -60,7 +60,12 @@
     <Compile Include="TreeScriptProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="harness.ps1" />
+    <None Include="Examples\tree.psm1" />
+    <None Include="Scripts\harness.ps1" />
+    <None Include="Scripts\new-providermodule.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

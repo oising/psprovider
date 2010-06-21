@@ -3,25 +3,49 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PSProviderFramework", "PSProviderFramework\PSProviderFramework.csproj", "{04801526-0696-4C49-913E-5AF17175E842}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{B6BE4630-23A3-475C-91B0-E866D279CB21}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
+		SccNumberOfProjects = 3
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = PSProviderFramework\\PSProviderFramework.csproj
 		SccProjectName1 = PSProviderFramework
 		SccLocalPath1 = PSProviderFramework
+		SccProjectUniqueName2 = Test\\Test.csproj
+		SccProjectName2 = Test
+		SccLocalPath2 = Test
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{04801526-0696-4C49-913E-5AF17175E842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{04801526-0696-4C49-913E-5AF17175E842}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04801526-0696-4C49-913E-5AF17175E842}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{04801526-0696-4C49-913E-5AF17175E842}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{04801526-0696-4C49-913E-5AF17175E842}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04801526-0696-4C49-913E-5AF17175E842}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04801526-0696-4C49-913E-5AF17175E842}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{04801526-0696-4C49-913E-5AF17175E842}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{04801526-0696-4C49-913E-5AF17175E842}.Release|x86.ActiveCfg = Release|Any CPU
+		{B6BE4630-23A3-475C-91B0-E866D279CB21}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{B6BE4630-23A3-475C-91B0-E866D279CB21}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{B6BE4630-23A3-475C-91B0-E866D279CB21}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{B6BE4630-23A3-475C-91B0-E866D279CB21}.Debug|x86.ActiveCfg = Debug|x86
+		{B6BE4630-23A3-475C-91B0-E866D279CB21}.Debug|x86.Build.0 = Debug|x86
+		{B6BE4630-23A3-475C-91B0-E866D279CB21}.Release|Any CPU.ActiveCfg = Release|x86
+		{B6BE4630-23A3-475C-91B0-E866D279CB21}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{B6BE4630-23A3-475C-91B0-E866D279CB21}.Release|Mixed Platforms.Build.0 = Release|x86
+		{B6BE4630-23A3-475C-91B0-E866D279CB21}.Release|x86.ActiveCfg = Release|x86
+		{B6BE4630-23A3-475C-91B0-E866D279CB21}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

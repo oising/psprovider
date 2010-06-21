@@ -3,48 +3,62 @@ using System.Management.Automation;
 
 namespace PSProviderFramework
 {
-    public class DynamicParameterBuilder
+    public class DynamicParameterBuilder : IDynamicParameterBuilder
     {
         private readonly RuntimeDefinedParameterDictionary _dictionary;
 
-        public DynamicParameterBuilder()
+        internal DynamicParameterBuilder()
         {
             _dictionary = new RuntimeDefinedParameterDictionary();
         }
 
-        public void AddSwitchParam(string name)
+
+        public IDynamicParameterBuilder AddSwitchParam(string name)
         {
-            AddParam<SwitchParameter>(name, false, null);
+            return AddParam<SwitchParameter>(name, false, null);
         }
 
-        public void AddStringParam(string name)
+        public IDynamicParameterBuilder AddSwitchParam(string name, string parameterset)
         {
-            AddStringParam(name, false);
+            return AddParam<SwitchParameter>(name, false, parameterset);
         }
 
-        public void AddStringParam(string name, bool mandatory)
+        public IDynamicParameterBuilder AddStringParam(string name)
         {
-            AddStringParam(name, mandatory, null);
+            return AddStringParam(name, false);
         }
 
-        public void AddStringParam(string name, string parameterSet)
+        public IDynamicParameterBuilder AddStringParam(string name, bool mandatory)
         {
-            AddParam<String>(name, false, parameterSet);
+            return AddStringParam(name, mandatory, null);
         }
 
-        public void AddStringParam(string name, bool mandatory, string parameterSet)
+        public IDynamicParameterBuilder AddStringParam(string name, string parameterSet)
         {
-            AddParam<String>(name, mandatory, parameterSet);
+            return AddParam<String>(name, false, parameterSet);
         }
 
-        public void AddParam<T>(string name, bool mandatory, string parameterSet)
+        public IDynamicParameterBuilder AddStringParam(string name, bool mandatory, string parameterSet)
+        {
+            return AddParam<String>(name, mandatory, parameterSet);            
+        }
+
+        internal IDynamicParameterBuilder AddParam<T>(string name, bool mandatory, string parameterSet)
         {
             var pa = new ParameterAttribute {ParameterSetName = parameterSet, Mandatory = mandatory};
             var rdp = new RuntimeDefinedParameter {Name = name, ParameterType = typeof (T)};
             rdp.Attributes.Add(pa);
 
             _dictionary.Add(name, rdp);
+            
+            return this;
         }
+
+        //public IDynamicParameterBuilder Clear()
+        //{
+        //    _dictionary.Clear();
+        //    return this;
+        //}
 
         public RuntimeDefinedParameterDictionary GetDictionary()
         {

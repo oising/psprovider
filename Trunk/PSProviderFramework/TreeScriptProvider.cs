@@ -61,7 +61,7 @@ namespace PSProviderFramework
                 {
                     ThrowTerminatingError(
                         new ErrorRecord(
-                            new NotImplementedException("Drive-less operation not implemented."),
+                            new NotImplementedException("Driveless operation not implemented."),
                             "NoCurrentScriptDrive",
                             ErrorCategory.NotImplemented,
                             null));
@@ -73,45 +73,6 @@ namespace PSProviderFramework
         }
 
         #endregion
-
-        //private void Dispatch(Action action, Expression<Action> expression)
-        //{
-        //    var methodCall = (MethodCallExpression)expression.Body;
-        //    string methodName = methodCall.Method.Name;
-        //    var parameterNames = (from memberExpr in methodCall.Arguments.Cast<MemberExpression>()
-        //                          select ("$" + memberExpr.Member.Name)).ToArray();
-
-        //    string invoke = String.Format("{0} {1};", methodName, String.Join(" ", parameterNames));
-            
-        //}
-
-        //private TReturn Dispatch<TReturn>(Func<TReturn> func, Expression<Func<TReturn>> expression)
-        //{
-        //    return default(TReturn);
-        //}
-
-        //private TDelegate GetDispatcher<TDelegate>(Expression<TDelegate> expr)
-        //{
-        //    var methodCall = (MethodCallExpression) expr.Body;
-
-        //    string methodName = methodCall.Method.Name;
-        //    var parameterNames = (from memberExpr in methodCall.Arguments.Cast<MemberExpression>()
-        //                          select ("$" + memberExpr.Member.Name)).ToArray();
-
-        //    Console.WriteLine("Func: {0}({1});", methodName, String.Join(" ", parameterNames));
-
-        //    TDelegate lambda;
-
-        //    if (this.Module.ExportedFunctions.ContainsKey(methodName))
-        //    {
-        //        lambda = (TDelegate) 
-        //    }
-        //    else
-        //    {
-        //        lambda = expr.Compile();
-        //    }
-        //    return lambda;
-        //}
 
         private TReturn InvokeFunction<TReturn>(string function, params object[] parameters)
         {
@@ -282,7 +243,14 @@ namespace PSProviderFramework
             var parameters = (RuntimeDefinedParameterDictionary) DynamicParameters;
             var parameter = parameters["ModuleInfo"];
             var module = ((PSModuleInfo) parameter.Value);
-            module.SessionState.PSVariable.Set(new PSProviderVariable<TreeScriptProvider>());
+
+            var variableIntrinsics = module.SessionState.PSVariable;
+
+            // fixme: should I check against Type too?
+            if (variableIntrinsics.Get("PSProvider") == null)
+            {
+                variableIntrinsics.Set(new PSProviderVariable<TreeScriptProvider>());
+            }            
 
             return new ScriptDriveInfo(drive, (PSModuleInfo) parameter.Value);
         }

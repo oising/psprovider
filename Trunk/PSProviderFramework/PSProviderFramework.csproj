@@ -60,7 +60,7 @@
     <Compile Include="TreeScriptProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Examples\tree.psm1" />
+    <None Include="Examples\tree-template.psm1" />
     <None Include="Scripts\harness.ps1" />
     <None Include="Scripts\new-providermodule.ps1" />
   </ItemGroup>

@@ -57,7 +57,7 @@ namespace PSProviderFramework
                 {
                     ThrowTerminatingError(
                         new ErrorRecord(
-                            new NotImplementedException("Drive-less operation not implemented."),
+                            new NotImplementedException("Driveless operation not implemented."),
                             "NoCurrentScriptDrive",
                             ErrorCategory.NotImplemented,
                             null));

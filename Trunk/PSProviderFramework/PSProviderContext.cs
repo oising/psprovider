@@ -10,6 +10,7 @@ using System;
 using System.Diagnostics;
 using System.Management.Automation;
 using System.Management.Automation.Provider;
+using JetBrains.Annotations;
 
 namespace PSProviderFramework
 {
@@ -29,7 +30,18 @@ namespace PSProviderFramework
 
         internal static TReturn InvokeFunctionInternal<TReturn>(string function, object[] parameters)
         {
-            Debug.Assert(false == String.IsNullOrEmpty(function), "parameter 'function' not null or empty.");
+            if (function == null)
+            {
+                throw new ArgumentNullException("function");
+            }
+
+            TReturn returnValue = default(TReturn);
+
+            // dynamic parameters not supported yet
+            if (function.IndexOf("dynamic", StringComparison.OrdinalIgnoreCase) != -1)
+            {
+                return returnValue;
+            }
 
             Debug.WriteLine(
                 String.Format(
@@ -37,9 +49,7 @@ namespace PSProviderFramework
                     typeof (TReturn).Name,
                     function,
                     parameters.Length));
-
-            TReturn returnValue = default(TReturn);
-
+           
             try
             {
                 // function exists in bound module?

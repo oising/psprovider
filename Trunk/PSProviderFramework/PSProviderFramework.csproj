@@ -48,6 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Annotations.cs" />
+    <Compile Include="Commands\NewContentReaderCommand.cs" />
+    <Compile Include="Commands\NewContentWriterCommand.cs" />
     <Compile Include="DynamicParameterBuilder.cs" />
     <Compile Include="IDynamicParameterBuilder.cs" />
     <Compile Include="IScriptProvider.cs" />
@@ -64,9 +66,7 @@
     <None Include="Scripts\harness.ps1" />
     <None Include="Scripts\new-providermodule.ps1" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

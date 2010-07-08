@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using System;
+using System.Management.Automation;
 using System.Management.Automation.Provider;
 
 namespace PSProviderFramework
@@ -12,16 +13,16 @@ namespace PSProviderFramework
             this.Description = string.Format("{0} Bound Provider", typeof(TProvider).Name);
         }
 
-        public override bool IsValidValue(object value)
-        {
-            return (PSProviderContext<TProvider>.Current != null);
-        }
-
         public override object Value
         {
             get
             {
-                return PSProviderContext<TProvider>.Current;
+                TProvider provider = PSProviderContext<TProvider>.Current;
+                if (provider == null)
+                {
+                    throw new InvalidOperationException("You cannot access the $PSProvider variable from here.");
+                }
+                return provider;
             }
         }
     }

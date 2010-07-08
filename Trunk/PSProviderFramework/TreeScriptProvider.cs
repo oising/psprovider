@@ -8,8 +8,8 @@ using System.Management.Automation.Provider;
 
 namespace PSProviderFramework
 {
-    [CmdletProvider("TreeScriptProvider", ProviderCapabilities.None)]
-    public class TreeScriptProvider : NavigationCmdletProvider, IScriptProvider
+    [CmdletProvider("TreeScriptProvider", ProviderCapabilities.ShouldProcess)]
+    public class TreeScriptProvider : NavigationCmdletProvider, IScriptProvider, IContentCmdletProvider
     {
         private ScriptDriveInfo CurrentDrive
         {
@@ -254,5 +254,39 @@ namespace PSProviderFramework
 
             return new ScriptDriveInfo(drive, (PSModuleInfo) parameter.Value);
         }
+
+        #region Implementation of IContentCmdletProvider
+
+        IContentReader IContentCmdletProvider.GetContentReader(string path)
+        {
+            return InvokeFunction<IContentReader>("GetContentReader", path);
+        }
+
+        object IContentCmdletProvider.GetContentReaderDynamicParameters(string path)
+        {
+            return null;
+        }
+
+        IContentWriter IContentCmdletProvider.GetContentWriter(string path)
+        {
+            return InvokeFunction<IContentWriter>("GetContentWriter", path);
+        }
+
+        object IContentCmdletProvider.GetContentWriterDynamicParameters(string path)
+        {
+            return null;
+        }
+
+        void IContentCmdletProvider.ClearContent(string path)
+        {
+            InvokeFunction("ClearContent", path);
+        }
+
+        object IContentCmdletProvider.ClearContentDynamicParameters(string path)
+        {
+            return null;
+        }
+
+        #endregion
     }
 }

@@ -62,6 +62,8 @@
     <Compile Include="TreeScriptProvider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Examples\contentwriter-by-char.ps1" />
+    <None Include="Examples\contentwriter-by-line.ps1" />
     <None Include="Examples\tree-template.psm1" />
     <None Include="Scripts\harness.ps1" />
     <None Include="Scripts\new-providermodule.ps1" />

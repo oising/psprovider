@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Management.Automation;
 using System.Management.Automation.Provider;
 
 namespace PSProviderFramework
 {
     [CmdletProvider("ContainerScriptProvider", ProviderCapabilities.ShouldProcess)]
-    public class ContainerScriptProvider : ContainerCmdletProvider, IScriptProvider, IContentCmdletProvider
+    public class ContainerScriptProvider : ContainerCmdletProvider, IScriptProvider, IContentCmdletProvider, IPropertyCmdletProvider
     {
         private ScriptDriveInfo CurrentDrive
         {
@@ -256,6 +257,40 @@ namespace PSProviderFramework
         }
 
         object IContentCmdletProvider.ClearContentDynamicParameters(string path)
+        {
+            return null;
+        }
+
+        #endregion
+
+        #region Implementation of IPropertyCmdletProvider
+
+        void IPropertyCmdletProvider.GetProperty(string path, Collection<string> providerSpecificPickList)
+        {
+            InvokeFunction("GetProperty", path, providerSpecificPickList);
+        }
+
+        object IPropertyCmdletProvider.GetPropertyDynamicParameters(string path, Collection<string> providerSpecificPickList)
+        {
+            return null;
+        }
+
+        void IPropertyCmdletProvider.SetProperty(string path, PSObject propertyValue)
+        {
+            InvokeFunction("SetProperty", path, propertyValue);
+        }
+
+        object IPropertyCmdletProvider.SetPropertyDynamicParameters(string path, PSObject propertyValue)
+        {
+            return null;
+        }
+
+        void IPropertyCmdletProvider.ClearProperty(string path, Collection<string> propertyToClear)
+        {
+            InvokeFunction("ClearProperty", path, propertyToClear);
+        }
+
+        object IPropertyCmdletProvider.ClearPropertyDynamicParameters(string path, Collection<string> propertyToClear)
         {
             return null;
         }

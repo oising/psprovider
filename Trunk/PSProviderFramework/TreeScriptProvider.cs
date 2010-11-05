@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Management.Automation;
 using System.Management.Automation.Provider;
 
@@ -95,6 +91,11 @@ namespace PSProviderFramework
             {
                 PSProviderContext<TreeScriptProvider>.InvokeFunctionInternal<object>(function, parameters);
             } // pop context
+        }
+
+        public new PSDriveInfo PSDriveInfo
+        {
+            get { return base.PSDriveInfo; }
         }
 
         protected override void GetItem(string path)

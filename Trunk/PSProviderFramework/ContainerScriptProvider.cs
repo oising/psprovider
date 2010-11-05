@@ -45,6 +45,11 @@ namespace PSProviderFramework
             base.WriteProgress(progress);
         }
 
+        public new PSDriveInfo PSDriveInfo
+        {
+            get { return base.PSDriveInfo; }
+        }
+
         public IDynamicParameterBuilder GetParameterBuilder()
         {
             return new DynamicParameterBuilder();
@@ -58,9 +63,9 @@ namespace PSProviderFramework
                 {
                     ThrowTerminatingError(
                         new ErrorRecord(
-                            new NotImplementedException("Driveless operation not implemented."),
+                            new InvalidOperationException("No module available in this context."),
                             "NoCurrentScriptDrive",
-                            ErrorCategory.NotImplemented,
+                            ErrorCategory.InvalidOperation,
                             null));
                 }
                 // ReSharper disable PossibleNullReferenceException
@@ -82,7 +87,7 @@ namespace PSProviderFramework
         }
 
         protected override object SetItemDynamicParameters(string path, object value)
-        {
+        {            
             return InvokeFunction<object>("SetItemDynamicParameters", path, value); // string path, object value
         }
 

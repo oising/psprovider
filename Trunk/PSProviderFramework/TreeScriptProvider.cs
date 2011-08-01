@@ -5,6 +5,29 @@ using System.Management.Automation.Provider;
 
 namespace PSProviderFramework
 {
+    [CmdletProvider("TransactedTreeScriptProvider", ProviderCapabilities.ShouldProcess | ProviderCapabilities.Transactions)]
+    public class TransactedTreeScriptProvider : TreeScriptProvider {
+        protected override TReturn InvokeFunction<TReturn>(string function, params object[] parameters) {
+            TReturn returnValue;
+
+            // push correct provider thread context for this call
+            using (PSProviderContext<TransactedTreeScriptProvider>.Enter(this)) {
+                returnValue = PSProviderContext<TransactedTreeScriptProvider>
+                    .InvokeFunctionInternal<TReturn>(function, parameters);
+            } // pop context
+
+            return returnValue;
+        }
+
+        protected override void InvokeFunction(string function, params object[] parameters) {
+            // push correct provider thread context for this call
+            using (PSProviderContext<TransactedTreeScriptProvider>.Enter(this)) {
+                PSProviderContext<TransactedTreeScriptProvider>
+                    .InvokeFunctionInternal<object>(function, parameters);
+            } // pop context
+        }
+    }
+
     [CmdletProvider("TreeScriptProvider", ProviderCapabilities.ShouldProcess)]
     public class TreeScriptProvider : NavigationCmdletProvider, IScriptProvider, IContentCmdletProvider, IPropertyCmdletProvider
     {
@@ -71,7 +94,7 @@ namespace PSProviderFramework
 
         #endregion
 
-        private TReturn InvokeFunction<TReturn>(string function, params object[] parameters)
+        protected virtual TReturn InvokeFunction<TReturn>(string function, params object[] parameters)
         {
             TReturn returnValue;
 
@@ -84,7 +107,7 @@ namespace PSProviderFramework
             return returnValue;
         }
 
-        private void InvokeFunction(string function, params object[] parameters)
+        protected virtual void InvokeFunction(string function, params object[] parameters)
         {
             // push correct provider thread context for this call
             using (PSProviderContext<TreeScriptProvider>.Enter(this))

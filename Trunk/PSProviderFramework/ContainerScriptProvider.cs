@@ -3,8 +3,22 @@ using System.Collections.ObjectModel;
 using System.Management.Automation;
 using System.Management.Automation.Provider;
 
-namespace PSProviderFramework
-{
+namespace PSProviderFramework {
+    [CmdletProvider("TransactedContainerScriptProvider", ProviderCapabilities.ShouldProcess | ProviderCapabilities.Transactions)]
+    public class TransactedContainerScriptProvider : ContainerScriptProvider {
+        protected override TReturn InvokeFunction<TReturn>(string function, params object[] parameters) {
+            TReturn returnValue;
+
+            // push correct provider thread context for this call
+            using (PSProviderContext<TransactedContainerScriptProvider>.Enter(this)) {
+                returnValue = PSProviderContext<TransactedContainerScriptProvider>
+                    .InvokeFunctionInternal<TReturn>(function, parameters);
+            } // pop context
+
+            return returnValue;
+        }
+    }
+
     [CmdletProvider("ContainerScriptProvider", ProviderCapabilities.ShouldProcess)]
     public class ContainerScriptProvider : ContainerCmdletProvider, IScriptProvider, IContentCmdletProvider, IPropertyCmdletProvider
     {
@@ -75,6 +89,8 @@ namespace PSProviderFramework
         }
 
         #endregion
+
+        #region ContainerCmdletProvider Members
 
         protected override object GetItemDynamicParameters(string path)
         {
@@ -158,7 +174,9 @@ namespace PSProviderFramework
             return InvokeFunction<object>("CopyItemDynamicParameters", path, destination, recurse); // string path, string destination, bool recurse
         }
 
-        private TReturn InvokeFunction<TReturn>(string function, params object[] parameters)
+        #endregion
+
+        protected virtual TReturn InvokeFunction<TReturn>(string function, params object[] parameters)
         {
             TReturn returnValue;
 
